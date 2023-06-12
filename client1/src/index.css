@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.slick-slide {
+    width: auto !important;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.slick-prev:before, .slick-next:before {
+    color: #09529b !important;
+  }
+.slick-list {
+    margin: 0 30px;
+}
+.transform {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}

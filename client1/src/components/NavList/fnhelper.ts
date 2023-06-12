@@ -1,5 +1,5 @@
 export const listItem = [
-    {id:1, text: "+"},
+    // {id:1, text: "+"},
     {id:2, text: "For you", active: true},
     {id:3, text: "Following"},
     {id:4, text: "Testing"},
