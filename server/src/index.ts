@@ -8,12 +8,23 @@ import { customError, listtRouteExclude } from "./fnhelper";
 import { checkAuth } from "./middleware/checkauth";
 import routerBlog from "./router/blog";
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
+
 console.log('port', PORT)
 
-app.use(cors());
+
+const corsOptions = {
+  origin: true, //included origin as true
+  credentials: true, //included credentials as true
+};
+
+app.use(cors(corsOptions));
+app.use(cookieParser());
+
 app.get("/", (req:Request, res:Response) => {
   res.status(200).json({
     message: "Bạn đã truy cập vào link http://localhost:3002",
@@ -47,7 +58,7 @@ app.use("/blog", routerBlog);
 //xử lý lỗi và trả lỗi về client cho toàn bộ request
 app.use((err: customError, req: Request, res: Response, next: NextFunction) => {
   console.log('err trong global', err)
-  return res.status(err.statusCode ||  500).json({ message: err.message, data: err.data, status: 0 });
+  return res.status(err.statusCode ||  500).json({ message: err.message, data: err.data || null, status: 0 });
 });
 app.listen(PORT, () => {
   console.log("server đang chạy trên port 3002");

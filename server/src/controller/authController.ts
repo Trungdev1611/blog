@@ -4,7 +4,6 @@ import User from "../models/User";
 import bcrypt from "bcrypt";
 import { customError, hashPassWord } from "../fnhelper";
 import { generateJWT } from "../middleware/checkauth";
-
 export async function registerController(
   req: Request,
   res: Response,
@@ -56,15 +55,28 @@ export async function loginController(
     if (!checkpassword) {
       throw new customError(400, "Username hoặc password không đúng", null);
     }
+    const accessToken = generateJWT(30)
+    const reFreshToken = generateJWT(3600)
+    res.cookie('refreshtokenIncookie', reFreshToken, {  sameSite: 'none',secure:false,
+    //  secure: true, cái này cho https
+     maxAge: 24 * 60 * 60 * 1000 ,  httpOnly : true});
     res.status(200).json({
       message: "Login thành công",
       data: {
         username: value.username,
-        token: generateJWT()
+        token: accessToken
       },
    
     });
   } catch (error) {
     next(error);
   }
+}
+
+export function callRefreshTokenGetNewAcessToken(req:Request, res:Response, next:NextFunction) {
+    console.log("refreshtoken trong cookie gửi từ client", req.headers, req.cookies?.refreshtokenIncookie)
+
+    res.status(200).json({
+      message: "call refresh token thành công"
+    })
 }

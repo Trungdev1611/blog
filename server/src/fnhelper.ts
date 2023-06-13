@@ -18,5 +18,5 @@ export class customError extends Error {
     }
 }
 
-export const listtRouteExclude = ['/auth/register', '/auth/login']
+export const listtRouteExclude = ['/auth/register', '/auth/login', '/auth/refreshtoken']
 

@@ -21,16 +21,17 @@ export function checkAuth(req: Request, res: Response, next: NextFunction) {
     next()
 
   } catch (error) {
-    next(error);
+   let errorCustom =   new customError(401, "Authorization!", null);
+   next(errorCustom)
   }
 }
 
-export function generateJWT() {
+export function generateJWT(time:number) {
   if (!process.env.PRIVATE_KEY) {
     throw new Error(
       "Private key not found. Ensure that the PRIVATE_KEY environment variable is set."
     );
   }
 
-  return jwt.sign({ foo: "bar" }, process.env.PRIVATE_KEY, { expiresIn: 30 }); //30s
+  return jwt.sign({ foo: "bar" }, process.env.PRIVATE_KEY, { expiresIn: time }); //30s
 }
