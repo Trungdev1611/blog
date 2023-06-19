@@ -35,18 +35,43 @@ const CustomPrevButton = () => {
 
 
 export default function SimpleSlider() {
-    const [showPrevButton, setShowPrevButton] = React.useState(true);
     const sliderRef = useRef<Slider | null>(null);
   const settings = {
     dots: false,
     // infinite: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 1,
     slidesToScroll: 1,
     // arrows: true,
     centerPadding: "60px",
     className: `py-2 whitespace-nowrap text-center text-[#aaa]`,
     variableWidth: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        
+        }
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        
+        }
+      }
+    ],
     nextArrow: <CustomNextButton onClick = { handleNext}/>,
     prevArrow: <CustomPrevButton /> 
 }
@@ -57,7 +82,7 @@ function handleNext() {
       }
 }
   return (
-    <div className="border border-red-300 relative px-10">
+    <div className="border  relative px-10">
         <div className="">
         <Slider {...settings} ref={sliderRef}>
         {listItem.map((item) => {
@@ -74,4 +99,3 @@ function handleNext() {
     </div>
   );
 }
-// className={`px-3 py-2 whitespace-nowrap ${item.active? "border-b-slate-300 border-b": ""}`}

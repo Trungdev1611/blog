@@ -5,7 +5,6 @@ import { customError } from "../fnhelper";
 dotenv.config();
 
 export function checkAuth(req: Request, res: Response, next: NextFunction) {
-    console.log('checkAuth')
   try {
     const token = req.headers?.authorization;
     if (!token) {
@@ -22,6 +21,8 @@ export function checkAuth(req: Request, res: Response, next: NextFunction) {
 
   } catch (error) {
    let errorCustom =   new customError(401, "Authorization!", null);
+  console.log(`vao day me roi`)
+  
    next(errorCustom)
   }
 }

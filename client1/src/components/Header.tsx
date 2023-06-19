@@ -4,8 +4,8 @@ const Header = () => {
   return (
     <div>
       <header>
-        <div className="flex justify-between px-8 py-2 shadow-sm border-b border-slate-200">
-          <div className="flex gap-6 place-items-center">
+        <div className="flex justify-between xs:px-8 py-2 shadow-sm border-b border-slate-200 ">
+          <div className="flex gap-6 place-items-center flex-1 max-w-[300px]">
             <div>
               <img
                 src="https://cdn-icons-png.flaticon.com/512/5968/5968885.png"
@@ -14,19 +14,19 @@ const Header = () => {
                 height={"auto"}
               />
             </div>
-            <div>
+            <div className="borderw-full">
               <input
                 type="text"
                 placeholder="Search medium"
-                className="rounded-md outline-none border-gray-300 border p-1 min-w-[250px]"
+                className="rounded-md outline-none border-gray-300 border p-1 min-w-[150px] "
               />
             </div>
           </div>
           <div className="flex gap-6 place-items-center">
-            <span className="text-[20px] text-gray-600">
+            <span className="text-[20px] text-gray-600 hidden md:inline-block">
               <BsPencilSquare />
             </span>
-            <span className="text-[20px] text-gray-600">
+            <span className="text-[20px] text-gray-600 hidden md:inline-block">
               <BsBell />
             </span>
             <img

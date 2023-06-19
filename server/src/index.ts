@@ -56,9 +56,13 @@ app.use("/blog", routerBlog);
 
 
 //xử lý lỗi và trả lỗi về client cho toàn bộ request
-app.use((err: customError, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.log('err trong global', err)
-  return res.status(err.statusCode ||  500).json({ message: err.message, data: err.data || null, status: 0 });
+  if(err instanceof customError) {
+    return res.status(err.statusCode).json({ message: err.message, data: err.data || null, status: 0 });
+
+  }
+  return res.status(500).json({ message: err.message, data: null, status: 0 });
 });
 app.listen(PORT, () => {
   console.log("server đang chạy trên port 3002");
