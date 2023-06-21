@@ -10,7 +10,6 @@ instance.defaults.withCredentials = true;
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    config.headers["Content-Type"] = "application/json";
     const token = localStorage.getItem("token");
     console.log(`tokenn`, token)
     config.headers.authorization = token; //cấu hình token cho all request
@@ -51,6 +50,7 @@ instance.interceptors.response.use(
       //********nên so sánh cái thời gian hết hạn accesstoken hay chưa để gọi api refreshtoken mới hơn chứ làm như hiện tại để gọi request rồi nếu hết hạn lỗi 401 thì không thực thi được lại cái hàm đã gọi trước đó*/
       //ta nên check acceesstoken hết hạn chưa, hết hạn rồi thì chờ refreshtoken lây token mới rồi mới gọi thực thi hàm, như thế sẽ không bị mất request chứ k nên làm như bên dưới. Bên dưới để tham khảo thôi
       const responseRefreshToken = await instance.get(`/auth/refreshtoken`, {withCredentials: true});
+      console.log(`responseRefreshToken`, responseRefreshToken)
       const accessTokenNew = responseRefreshToken?.data.accessTokenNew
       localStorage.setItem(`token`, accessTokenNew)
       const previousRequest = error.config;
@@ -116,11 +116,10 @@ export const Apiclient = {
   patch: (url: string, payload?: unknown) => instance.patch(url, payload),
   put: (url: string, payload?: unknown) => instance.put(url, payload),
   delete: (url: string) => instance.delete(url),
+  postFormData: (url: string, payload?: unknown) => instance.post(url, payload, {
+    headers: { "Content-Type": "multipart/form-data" },
+  })
 };
 
-function getTokenNewFromRefreshtoken(refreshtoken: string) {
-  return axios.post(`${baseURL}/auth/refreshtoken`, {
-    refreshtoken: refreshtoken,
-  });
-}
+
 

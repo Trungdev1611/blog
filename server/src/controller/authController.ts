@@ -45,8 +45,9 @@ export async function loginController(
   console.log(req.body);
   const { error, value } = ruleLogin.validate(req.body);
   try {
+
     if (error) {
-      res.status(400).json({ error: error.details[0].message }); //trả về message lỗi khi bất kỳ trường nào là không hợp lệ
+      res.status(400).json({ error: error?.details[0].message }); //trả về message lỗi khi bất kỳ trường nào là không hợp lệ
       return;
     }
     const findOptions = { username: req.body.username };
@@ -58,7 +59,7 @@ export async function loginController(
     }
     let checkpassword = bcrypt.compareSync(
       req.body.password,
-      checkIsExitsUser.dataValues.password
+      checkIsExitsUser?.dataValues.password
     );
     if (!checkpassword) {
       throw new customError(400, "Username hoặc password không đúng", null);
@@ -129,7 +130,10 @@ export function getcallRefreshTokenGetNewAcessToken(req:Request, res:Response, n
   console.log(`decoderefreshtoken`, decode)
   res.status(200).json({
     message: "call refresh token thành công",
-    accessTokenNew: generateJWT(30)
+    data: {
+      accessTokenNew: generateJWT(30)
+    }
+
     
   })
  } catch (error) {

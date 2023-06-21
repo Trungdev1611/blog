@@ -21,7 +21,6 @@ export function checkAuth(req: Request, res: Response, next: NextFunction) {
 
   } catch (error) {
    let errorCustom =   new customError(401, "Authorization!", null);
-  console.log(`vao day me roi`)
   
    next(errorCustom)
   }

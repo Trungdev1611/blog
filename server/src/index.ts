@@ -9,6 +9,7 @@ import { checkAuth } from "./middleware/checkauth";
 import routerBlog from "./router/blog";
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import { logger } from "./logger/loggercontroller";
 
 dotenv.config();
 const app = express();
@@ -54,10 +55,14 @@ app.use("/blog", routerBlog);
 
 
 
-
 //xử lý lỗi và trả lỗi về client cho toàn bộ request
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log('err trong global', err)
+  // console.log('err trong global', err)
+
+  //start logger tất cả lỗi vào 1 file 
+  logger(err.message, req)
+    // end logger tất cả lỗi vào 1 file 
+
   if(err instanceof customError) {
     return res.status(err.statusCode).json({ message: err.message, data: err.data || null, status: 0 });
 

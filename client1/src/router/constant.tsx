@@ -1,5 +1,6 @@
 import Homes from "../Pages/Homes"
 import LoginPage from "../Pages/LoginPage"
+import AddUpdateBlog from "../components/Blog/AddUpdateBlog"
 type routeItem = {
     id:number,
     name: string,
@@ -14,5 +15,6 @@ export const publicRoute:Array<routeItem> = [
     {id:3, name: "/", element: <Homes />}
 ]
 export const PrivateRoute:Array<routeItem> =[
-    {id:20, name:"/homes", element: <Homes/>}
+    {id:20, name:"/homes", element: <Homes/>},
+    {id:21, name: "blog/add", element: <AddUpdateBlog />}
 ]
